@@ -1,0 +1,33 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+## PREPARO L'USCITA LED
+echo "7" > /sys/class/gpio/export
+echo "out" > /sys/class/gpio/gpio7/direction
+
+## PREPARO L'INGRESSO SHOT
+echo "4" > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio4/direction
+
+## killo gpsd e lo riavvio correttamente
+sudo killall gpsd
+gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock
+
+
+exit 0
