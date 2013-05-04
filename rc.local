@@ -27,7 +27,7 @@ echo "in" > /sys/class/gpio/gpio4/direction
 
 ## killo gpsd e lo riavvio correttamente
 sudo killall gpsd
-gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock
+gpsd /dev/gps_seriale -F /var/run/gpsd.sock
 
 
 exit 0
