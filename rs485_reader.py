@@ -56,7 +56,7 @@ def get_value_from(slave_address_high,slave_address_low):
 #############################################################################################################################
 ### MAIN PROGRAM 
 ser = serial.Serial(
-    port='/dev/ttyUSB0',
+    port='/dev/rs485_seriale',
     baudrate=9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,

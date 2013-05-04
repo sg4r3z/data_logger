@@ -7,6 +7,9 @@ Il file gps_reader permette al raspberry di comunicare con il gps attraverso il 
 ## FILE rs485_reader.py
 
 Il file rs485_reader permette al raspberry di leggere tutti i sensori, interrogandoli per indirizzo, questo restituisce una stringa con tutti i dati letti
+Per far funzionare questo modulo, è necessario installare python-serial
+	
+	sudo apt-get install python-serial
 
 ## FILE rc.local
 
