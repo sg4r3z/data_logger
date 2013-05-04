@@ -1,8 +1,6 @@
-import serial
-
 ##########################################################################################################################
 ## SCRIVI COMANDO SU SERIALE
-def write_port(data):
+def write_port(ser,data):
 # write_port("06 10 46 46")
 	dataB = []
 	data = data.split(' ')
@@ -12,14 +10,14 @@ def write_port(data):
 
 ##########################################################################################################################
 ## RECUPERA VALORE REGISTRO DA DISPOSITIVO ISO 1745
-def get_value_from(slave_address_high,slave_address_low):
+def get_value_from(ser,slave_address_high,slave_address_low):
 	
 	## CONVERTO IL CARATTERE IN VALORE HEX
-        hex_high = slave_address_high.encode("hex")
+	hex_high = slave_address_high.encode("hex")
 	hex_low = slave_address_low.encode("hex")
 	
 	## CHIEDO IL DATO AL DISPOSITIVO	
-	write_port("04 "+hex_high+" "+hex_low+" 3A 31 05")
+	write_port(ser,"04 "+hex_high+" "+hex_low+" 3A 31 05")
 
 	## RECUPERO LA STRINGA IN HEX FINO ALLA FINE
 	response = ser.read()
@@ -53,22 +51,9 @@ def get_value_from(slave_address_high,slave_address_low):
 	
 	return slave_address_high+slave_address_low+"#"+stringa_ascii
 
-#############################################################################################################################
-### MAIN PROGRAM 
-ser = serial.Serial(
-    port='/dev/rs485_seriale',
-    baudrate=9600,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS
-)
-ser.open()
-
-if ser.isOpen():
-	print get_value_from('1','2')
-else: 
-	print "PROBLEMA DURANTE L'APERTURA DELLA SERIALE"
-
+def human_readable_string(ser,slave_add_high,slave_add_low,etichetta):
+	k = get_value_from(ser,slave_add_high,slave_add_low)
+	return etichetta+":"+k
 	
 
 
