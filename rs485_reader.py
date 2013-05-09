@@ -1,3 +1,5 @@
+import string
+
 ##########################################################################################################################
 ## SCRIVI COMANDO SU SERIALE
 def write_port(ser,data):
@@ -36,13 +38,16 @@ def get_value_from(ser,slave_address_high,slave_address_low):
 	## PULISCO LA STRINGA DAI CARATTERI DI CONTROLLO 02 E 03
 	chr_inizio = '02'
 	chr_fine = '03'
-  	
+	sporco = '13'  	
+
 	## SE PRESENTE CARATTERE INIZIO
 	if chr_inizio in list:
 		list.pop(list.index(chr_inizio))
 	## SE PRESENTE CARATTERE FINE
 	if chr_fine in list:
 		list.pop(list.index(chr_fine))
+	if sporco in list:
+		list.pop(list.index(sporco))
 
 	## CONVERTIRE LA LISTA (VALORI HEX) IN ASCII
 	stringa_ascii = ""
@@ -53,6 +58,9 @@ def get_value_from(ser,slave_address_high,slave_address_low):
 
 def human_readable_string(ser,slave_add_high,slave_add_low,etichetta):
 	k = get_value_from(ser,slave_add_high,slave_add_low)
+	## TAGLIO L'INDICE DEL REGISTRO
+	##data = string.split(k,"#:1")
+	##print data
 	return etichetta+":"+k
 	
 
